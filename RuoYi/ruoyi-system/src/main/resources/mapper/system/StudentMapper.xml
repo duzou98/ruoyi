@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.StudentMapper">
+    
+    <resultMap type="Student" id="StudentResult">
+        <result property="id"    column="id"    />
+        <result property="stuName"    column="stu_name"    />
+        <result property="stuSex"    column="stu_sex"    />
+        <result property="stuTel"    column="stu_tel"    />
+        <result property="stuAge"    column="stu_age"    />
+        <result property="stuBirth"    column="stu_birth"    />
+        <result property="stuEmail"    column="stu_email"    />
+        <result property="stuNum"    column="stu_num"    />
+        <result property="stuAddress"    column="stu_address"    />
+        <result property="stuPhoto"    column="stu_photo"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectStudentVo">
+        select id, stu_name, stu_sex, stu_tel, stu_age, stu_birth, stu_email, stu_num, stu_address, stu_photo, del_flag, create_by, create_time, update_by, update_time, remark from t_student
+    </sql>
+	
+    <select id="selectStudentList" parameterType="Student" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        where  del_flag = '0'
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+             <if test="stuName != null  and stuName != '' "> and stu_name = #{stuName}</if>
+             <if test="stuSex != null  and stuSex != '' "> and stu_sex = #{stuSex}</if>
+             <if test="stuTel != null  and stuTel != '' "> and stu_tel = #{stuTel}</if>
+             <if test="stuAge != null  and stuAge != '' "> and stu_age = #{stuAge}</if>
+             <if test="stuBirth != null "> and stu_birth = #{stuBirth}</if>
+             <if test="stuEmail != null  and stuEmail != '' "> and stu_email = #{stuEmail}</if>
+             <if test="stuNum != null  and stuNum != '' "> and stu_num = #{stuNum}</if>
+             <if test="stuAddress != null  and stuAddress != '' "> and stu_address = #{stuAddress}</if>
+             <if test="stuPhoto != null  and stuPhoto != '' "> and stu_photo = #{stuPhoto}</if>
+             <if test="delFlag != null  and delFlag != '' "> and del_flag = #{delFlag}</if>
+             <if test="createBy != null  and createBy != '' "> and create_by = #{createBy}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="updateBy != null  and updateBy != '' "> and update_by = #{updateBy}</if>
+             <if test="updateTime != null "> and update_time = #{updateTime}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+    </select>
+    
+    <select id="selectStudentById" parameterType="String" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        where stu_num = #{stuNum}
+    </select>
+        
+    <insert id="insertStudent" parameterType="Student">
+        insert into t_student
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">id,</if>
+			<if test="stuName != null  and stuName != ''  ">stu_name,</if>
+			<if test="stuSex != null  and stuSex != ''  ">stu_sex,</if>
+			<if test="stuTel != null  and stuTel != ''  ">stu_tel,</if>
+			<if test="stuAge != null  and stuAge != ''  ">stu_age,</if>
+			<if test="stuBirth != null  ">stu_birth,</if>
+			<if test="stuEmail != null  and stuEmail != ''  ">stu_email,</if>
+			<if test="stuNum != null  and stuNum != ''  ">stu_num,</if>
+			<if test="stuAddress != null  and stuAddress != ''  ">stu_address,</if>
+			<if test="stuPhoto != null  and stuPhoto != ''  ">stu_photo,</if>
+			<if test="delFlag != null  and delFlag != ''  ">del_flag,</if>
+			<if test="createBy != null  and createBy != ''  ">create_by,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+            create_time
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  and id != ''  ">#{id},</if>
+			<if test="stuName != null  and stuName != ''  ">#{stuName},</if>
+			<if test="stuSex != null  and stuSex != ''  ">#{stuSex},</if>
+			<if test="stuTel != null  and stuTel != ''  ">#{stuTel},</if>
+			<if test="stuAge != null  and stuAge != ''  ">#{stuAge},</if>
+			<if test="stuBirth != null  ">#{stuBirth},</if>
+			<if test="stuEmail != null  and stuEmail != ''  ">#{stuEmail},</if>
+			<if test="stuNum != null  and stuNum != ''  ">#{stuNum},</if>
+			<if test="stuAddress != null  and stuAddress != ''  ">#{stuAddress},</if>
+			<if test="stuPhoto != null  and stuPhoto != ''  ">#{stuPhoto},</if>
+			<if test="delFlag != null  and delFlag != ''  ">#{delFlag},</if>
+			<if test="createBy != null  and createBy != ''  ">#{createBy},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+            sysdate()
+         </trim>
+    </insert>
+	 
+    <update id="updateStudent" parameterType="Student">
+        update t_student
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stuName != null  and stuName != ''  ">stu_name = #{stuName},</if>
+            <if test="stuSex != null  and stuSex != ''  ">stu_sex = #{stuSex},</if>
+            <if test="stuTel != null  and stuTel != ''  ">stu_tel = #{stuTel},</if>
+            <if test="stuAge != null  and stuAge != ''  ">stu_age = #{stuAge},</if>
+            <if test="stuBirth != null  ">stu_birth = #{stuBirth},</if>
+            <if test="stuEmail != null  and stuEmail != ''  ">stu_email = #{stuEmail},</if>
+            <if test="stuAddress != null  and stuAddress != ''  ">stu_address = #{stuAddress},</if>
+            <if test="stuPhoto != null  and stuPhoto != ''  ">stu_photo = #{stuPhoto},</if>
+            <if test="delFlag != null  and delFlag != ''  ">del_flag = #{delFlag},</if>
+            <if test="updateBy != null  and updateBy != ''  ">update_by = #{updateBy},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            update_time = sysdate()
+        </trim>
+        where stu_num = #{stuNum}
+    </update>
+
+	<delete id="deleteStudentById" parameterType="String">
+        delete from t_student where id = #{id}
+    </delete>
+
+    <select id="checkStuNumUnique" parameterType="String" resultType="int">
+        select count(1) from t_student where stu_num=#{stuNum}
+    </select>
+
+    <select id="checkPhoneUnique" parameterType="String" resultType="int">
+        select count(1) from t_student where stu_tel=#{stuTel}
+    </select>
+
+    <select id="checkEmailUnique" parameterType="String" resultType="int">
+        select count(1) from t_student where stu_email=#{stuEmail}
+    </select>
+
+  <!--  <delete id="deleteStudentByIds" parameterType="String">
+        delete from t_student where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>-->
+
+    <delete id="deleteStudentByIds" parameterType="String">
+        update t_student set del_flag = '2' where stu_num in
+        <foreach collection="array" item="stuNum" open="(" separator="," close=")">
+            #{stuNum}
+        </foreach>
+    </delete>
+    
+</mapper>

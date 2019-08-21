@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增学生基本')"/>
+    <th:block th:include="include :: jasny-bootstrap-css"/>
+    <!--<th:block th:include="include :: datetimepicker-css"/>-->
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-student-add">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学生学号：</label>
+                    <div class="col-sm-8">
+                        <input id="stuNum" name="stuNum" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学生姓名：</label>
+                    <div class="col-sm-8">
+                        <input id="stuName" name="stuName" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学生性别：</label>
+                    <div class="col-sm-8">
+                        <select name="stuSex" class="form-control m-b" th:with="type=${@dict.getType('sys_user_sex')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                    th:value="${dict.dictValue}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>出生年月：</label>
+                    <div class="col-sm-8">
+                        <!--<input id="stuBirth" name="stuBirth" class="form-control" type="text">-->
+                        <div class="form-group">
+                            <div class="input-group date">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" name="stuBirth" class="form-control" id="birth" placeholder="请选择时间"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学生电话：</label>
+                    <div class="col-sm-8">
+                        <input id="stuTel" name="stuTel" class="form-control" type="text" maxlength="11" required>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">学生年龄：</label>
+                    <div class="col-sm-8">
+                        <input id="stuAge" name="stuAge" class="form-control" type="text">
+                    </div>
+                </div>
+                </div>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label"><span style="color: red; ">*</span>学生邮箱：</label>
+                    <div class="col-sm-8">
+                        <input id="stuEmail" name="stuEmail" class="form-control email" type="text" maxlength="50"
+                               placeholder="请输入邮箱" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">家庭住址：</label>
+                    <div class="col-sm-8">
+                        <input id="stuAddress" name="stuAddress" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">学生照片：</label>
+                    <div class="col-sm-8">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="width: 140px; height: 140px;">
+                                <img th:src="@{/img/profile.jpg}">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"
+                                 style="max-width: 200px; max-height: 150px;"></div>
+                            <div>
+                        <span class="btn btn-white btn-file"><span class="fileinput-new">选择图片</span><span
+                                class="fileinput-exists">更改</span><input type="file" name="stuPhoto" id="stuPhoto"
+                                                                         accept="image/*"></span>
+                                <a href="#" class="btn btn-white fileinput-exists" data-dismiss="fileinput">清除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">备注：</label>
+                    <div class="col-sm-8">
+                        <input id="remark" name="remark" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-offset-5 col-sm-10">
+                <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<th:block th:include="include :: jasny-bootstrap-js"/>
+<!--<th:block th:include="include :: datetimepicker-js"/>-->
+<script type="text/javascript">
+    var prefix = ctx + "system/student"
+    $("#form-student-add").validate({
+        onkeyup: false,
+        rules: {
+            stuNum: {
+                minlength: 2,
+                maxlength: 20,
+                remote: {
+                    url: prefix + "/checkStuNumUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        name: function () {
+                            return $.common.trim($("#stuNum").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            stuEmail: {
+                email: true,
+                remote: {
+                    url: prefix + "/checkEmailUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        name: function () {
+                            return $.common.trim($("#stuEmail").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            stuTel: {
+                isPhone: true,
+                remote: {
+                    url: prefix + "/checkPhoneUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        name: function () {
+                            return $.common.trim($("#stuTel").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+        },
+        messages: {
+            "stuNum": {
+                remote: "学号已经存在"
+            },
+            "stuEmail": {
+                remote: "Email已经存在"
+            },
+            "stuTel": {
+                remote: "手机号码已经存在"
+            }
+        },
+        focusCleanup: true
+    });
+
+    $(function () {
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#birth',
+                type: 'date',
+                //默认显示当前日期
+                /* value: new Date(),*/
+                //最大日期
+                max: getNowFormatDate()
+            });
+        });
+
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+            return currentdate;
+        }
+    })
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            uploadFile();
+            // $.operate.save(prefix + "/add", $('#form-student-add').serialize());
+        }
+    }
+
+    function uploadFile() {
+        var data = $("#form-student-add").serializeArray();
+        var photo = $('#stuPhoto')[0].files[0];
+        data.push({"name":"file","value":photo});
+        $.operate.saveTab(prefix + "/add", data);
+      /*  var formData = new FormData();
+        formData.append('stuName', $("input[name='stuName']").val());
+        formData.append('stuSex', $("select").val());
+        formData.append('stuTel', $("input[name='stuTel']").val());
+        formData.append('stuBirth', $("#birth").val());
+        formData.append('stuEmail', $("input[name='stuEmail']").val());
+        formData.append('stuNum', $("input[name='stuNum']").val());
+        formData.append('stuAddress', $("input[name='stuAddress']").val());
+        formData.append('file', $('#stuPhoto')[0].files[0]);*/
+      /*  $.ajax({
+            url: prefix + "/add",
+            type: 'post',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (result) {
+                $.operate.successCallback(result);
+            }
+        });*/
+    }
+</script>
+</body>
+</html>
